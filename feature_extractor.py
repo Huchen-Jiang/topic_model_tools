@@ -49,11 +49,11 @@ class FeatureExtractor:
         elif self.method == 'word2vec':
             if self.w2v_model is None:
                 print('a w2v model will be trained with default parameters.')
-                self.w2v_model = self.train_w2v_model(documents)
+                self.train_w2v_model(documents)
             self.vecs = np.array(
-                [np.mean([self.w2v_model[word] for word in doc.split() if word in self.w2v_model]
+                [np.mean([self.w2v_model.wv[word] for word in doc.split() if word in self.w2v_model.wv]
                                    or [np.zeros(self.w2v_model.vector_size)], axis=0)
-                          for doc in preprocessed_documents]
+                          for doc in documents]
             )
         return self.vecs
             
